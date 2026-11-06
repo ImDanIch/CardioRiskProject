@@ -59,3 +59,13 @@ python main.py predict --final --input data/new_patients_example.csv
 `results/metrics/final_model_report.json` і п'ять нових графіків
 `results/figures/12_*.png`–`16_*.png`. Параметр `--final` використовує
 фінальну модель замість базової. Докладніше: `docs/final_evaluation.md`.
+
+## Етап 5 — ручне введення характеристик
+
+```powershell
+python main.py interactive
+python main.py interactive --output results/tables/manual_predictions.csv
+```
+
+Дані вводяться по черзі. Без `--output` вони не зберігаються.
+Докладніше: `docs/interactive_prediction.md`.

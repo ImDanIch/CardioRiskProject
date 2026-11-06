@@ -18,11 +18,17 @@ def main() -> None:
     predict_parser.add_argument("--output", type=Path, default=None)
     predict_parser.add_argument("--final", action="store_true",
                                 help="Use the finalized CatBoost model (requires finalize)")
+    interactive_parser = subparsers.add_parser("interactive", help="Manual patient data entry")
+    interactive_parser.add_argument("--output", type=Path, default=None,
+                                    help="Optional local CSV for entered data and predictions")
     args = parser.parse_args()
 
     config = ProjectConfig(root=Path(__file__).resolve().parent)
     manager = ExperimentManager(config)
-    if args.command == "explain":
+    if args.command == "interactive":
+        from src.interactive_prediction import run_interactive
+        run_interactive(config.final_model_file, args.output)
+    elif args.command == "explain":
         result = manager.explain(include_shap=args.shap)
         print(json.dumps(result, indent=2, ensure_ascii=False))
     elif args.command == "predict":
