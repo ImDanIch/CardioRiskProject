@@ -9,13 +9,15 @@ from src.experiment_manager import ExperimentManager
 def main() -> None:
     parser = argparse.ArgumentParser(prog="CardioRiskProject")
     subparsers = parser.add_subparsers(dest="command", required=True)
-    for name in ("analyze", "train", "experiments", "run", "benchmark", "tune", "ensemble"):
+    for name in ("analyze", "train", "experiments", "run", "benchmark", "tune", "ensemble", "finalize"):
         subparsers.add_parser(name)
     explain_parser = subparsers.add_parser("explain")
     explain_parser.add_argument("--shap", action="store_true", help="Also compute SHAP explanations")
     predict_parser = subparsers.add_parser("predict")
     predict_parser.add_argument("--input", required=True, type=Path)
     predict_parser.add_argument("--output", type=Path, default=None)
+    predict_parser.add_argument("--final", action="store_true",
+                                help="Use the finalized CatBoost model (requires finalize)")
     args = parser.parse_args()
 
     config = ProjectConfig(root=Path(__file__).resolve().parent)
@@ -25,7 +27,7 @@ def main() -> None:
         print(json.dumps(result, indent=2, ensure_ascii=False))
     elif args.command == "predict":
         output = args.output or config.tables_dir / "new_predictions.csv"
-        result = manager.predict(args.input, output)
+        result = manager.predict(args.input, output, final=args.final)
         print(f"Predictions saved: {output} ({len(result)} records)")
     else:
         result = getattr(manager, args.command)()

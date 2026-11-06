@@ -46,3 +46,16 @@ python main.py explain --shap
 ```
 
 Докладніше: `docs/ensemble_experiments.md`.
+
+## Етап 4 — фінальне оцінювання
+
+```powershell
+python -m pytest -q
+python main.py finalize
+python main.py predict --final --input data/new_patients_example.csv
+```
+
+`finalize` створює `models/cardio_final_model.joblib`, звіт у
+`results/metrics/final_model_report.json` і п'ять нових графіків
+`results/figures/12_*.png`–`16_*.png`. Параметр `--final` використовує
+фінальну модель замість базової. Докладніше: `docs/final_evaluation.md`.

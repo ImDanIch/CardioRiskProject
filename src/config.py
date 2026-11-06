@@ -16,6 +16,10 @@ class ProjectConfig:
         return self.root / "models" / "cardio_model.joblib"
 
     @property
+    def final_model_file(self) -> Path:
+        return self.root / "models" / "cardio_final_model.joblib"
+
+    @property
     def tables_dir(self) -> Path:
         return self.root / "results" / "tables"
 
