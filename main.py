@@ -9,7 +9,7 @@ from src.experiment_manager import ExperimentManager
 def main() -> None:
     parser = argparse.ArgumentParser(prog="CardioRiskProject")
     subparsers = parser.add_subparsers(dest="command", required=True)
-    for name in ("analyze", "train", "experiments", "run"):
+    for name in ("analyze", "train", "experiments", "run", "benchmark", "tune"):
         subparsers.add_parser(name)
     predict_parser = subparsers.add_parser("predict")
     predict_parser.add_argument("--input", required=True, type=Path)

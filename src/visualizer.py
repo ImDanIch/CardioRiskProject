@@ -50,3 +50,20 @@ class ResultVisualizer:
         fig.tight_layout()
         fig.savefig(self.directory / "04_learning_curve.png", dpi=160)
         plt.close(fig)
+
+    def extended_model_comparison(self, table: pd.DataFrame) -> None:
+        fig, ax = plt.subplots(figsize=(10, 5))
+        ax.bar(table["model"], table["roc_auc"])
+        ax.set(ylabel="Validation ROC-AUC", title="Algorithm benchmark", ylim=(0.0, 1.0))
+        ax.tick_params(axis="x", rotation=25)
+        fig.tight_layout()
+        fig.savefig(self.directory / "05_extended_benchmark.png", dpi=160)
+        plt.close(fig)
+
+    def tuning_comparison(self, baseline: dict, tuned: dict) -> None:
+        fig, ax = plt.subplots(figsize=(7, 4))
+        ax.bar(["Baseline", "Tuned"], [baseline["roc_auc"], tuned["roc_auc"]])
+        ax.set(ylabel="Validation ROC-AUC", title="Hyperparameter optimization", ylim=(0.0, 1.0))
+        fig.tight_layout()
+        fig.savefig(self.directory / "06_tuning_comparison.png", dpi=160)
+        plt.close(fig)

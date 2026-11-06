@@ -26,3 +26,12 @@
 Результати: `results/tables/`, `results/figures/`, `results/metrics/`.
 
 Не завантажуйте реальні медичні дані пацієнтів у публічний репозиторій.
+
+## Розширені експерименти (етап 2)
+
+```powershell
+python main.py benchmark
+python main.py tune
+```
+
+Перша команда порівнює шість алгоритмів на однакових підвибірках, друга підбирає гіперпараметри Gradient Boosting за крос-валідацією. Деталі та шляхи результатів: `docs/advanced_experiments.md`.
