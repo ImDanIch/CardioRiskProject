@@ -9,8 +9,10 @@ from src.experiment_manager import ExperimentManager
 def main() -> None:
     parser = argparse.ArgumentParser(prog="CardioRiskProject")
     subparsers = parser.add_subparsers(dest="command", required=True)
-    for name in ("analyze", "train", "experiments", "run", "benchmark", "tune"):
+    for name in ("analyze", "train", "experiments", "run", "benchmark", "tune", "ensemble"):
         subparsers.add_parser(name)
+    explain_parser = subparsers.add_parser("explain")
+    explain_parser.add_argument("--shap", action="store_true", help="Also compute SHAP explanations")
     predict_parser = subparsers.add_parser("predict")
     predict_parser.add_argument("--input", required=True, type=Path)
     predict_parser.add_argument("--output", type=Path, default=None)
@@ -18,7 +20,10 @@ def main() -> None:
 
     config = ProjectConfig(root=Path(__file__).resolve().parent)
     manager = ExperimentManager(config)
-    if args.command == "predict":
+    if args.command == "explain":
+        result = manager.explain(include_shap=args.shap)
+        print(json.dumps(result, indent=2, ensure_ascii=False))
+    elif args.command == "predict":
         output = args.output or config.tables_dir / "new_predictions.csv"
         result = manager.predict(args.input, output)
         print(f"Predictions saved: {output} ({len(result)} records)")

@@ -35,3 +35,14 @@ python main.py tune
 ```
 
 Перша команда порівнює шість алгоритмів на однакових підвибірках, друга підбирає гіперпараметри Gradient Boosting за крос-валідацією. Деталі та шляхи результатів: `docs/advanced_experiments.md`.
+
+## Етап 3 — ансамблеві моделі та пояснення
+
+```powershell
+python -m pip install -r requirements-stage3.txt
+python main.py ensemble
+python main.py explain
+python main.py explain --shap
+```
+
+Докладніше: `docs/ensemble_experiments.md`.

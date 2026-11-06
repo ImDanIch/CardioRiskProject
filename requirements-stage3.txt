@@ -1,0 +1,5 @@
+-r requirements.txt
+xgboost>=3.0,<4
+lightgbm>=4.5,<5
+catboost>=1.2.8,<2
+shap>=0.48,<1

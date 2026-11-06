@@ -3,6 +3,7 @@ import joblib
 from src.analyzer import DataAnalyzer
 from src.advanced_experiments import ModelBenchmark, HyperparameterOptimizer
 from src.config import ProjectConfig
+from src.ensemble_experiments import EnsembleBenchmark, FeatureImportanceStudy
 from src.learning_curve_experiment import TrainingSizeExperiment
 from src.predictor import RiskPredictor
 from src.trainer import ModelTrainer
@@ -29,6 +30,12 @@ class ExperimentManager:
 
     def tune(self):
         return HyperparameterOptimizer(self.config).run()
+
+    def ensemble(self):
+        return EnsembleBenchmark(self.config).run()
+
+    def explain(self, include_shap: bool = False):
+        return FeatureImportanceStudy(self.config).run(include_shap=include_shap)
 
     def predict(self, input_path, output_path):
         return RiskPredictor(self.config.model_file).predict_file(input_path, output_path)
